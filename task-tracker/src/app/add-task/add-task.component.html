@@ -1,0 +1,75 @@
+<div class="add-container">
+  <mat-card class="card">
+    <mat-card-title class="title">Add a task!</mat-card-title>
+    <mat-card-content class="contents">
+      <div class="form-group">
+        <mat-form-field class="titleInput" appearance="outline">
+          <mat-label>Title</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"
+                    type="text"
+                    id="taskName"
+                    name="taskName"
+                    [(ngModel)]="title"
+                    class="form-control"
+                    required>
+          </textarea>
+        </mat-form-field>
+
+        
+    
+        <br>
+    
+        <br>
+        <mat-form-field  class="descriptionInput" appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"
+                    type="text"
+                    id="taskDescription"
+                    name="taskDescription"
+                    [(ngModel)]="description"
+                    class="form-control"
+                    rows="4"
+                    required>
+          </textarea>
+        </mat-form-field>
+    
+        <br>
+    
+        <mat-form-field class="assignInput" appearance="outline">
+          <mat-label>Assigned to</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"
+                    type="text"
+                    id="taskAssign"
+                    name="taskAssign"
+                    [(ngModel)]="assignedTo"
+                    class="form-control"
+                    required>
+          </textarea>
+        </mat-form-field>
+    
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="buttonContainer">
+    <form (ngSubmit)="onSubmit()">
+        <button mat-raised-button color='primary' type="submit" class="addButton">
+          <!-- <mat-icon>add</mat-icon> --> Add
+        </button>
+        <button mat-flat-button color='warn' type="cancel" class="cancelButton" (click)="onClick()">
+          <!-- <mat-icon>cancel</mat-icon> --> Cancel
+        </button>
+    </form>
+  </mat-card-actions>
+</mat-card>

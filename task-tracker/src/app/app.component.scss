@@ -1,0 +1,13 @@
+body{
+  background-color: #FAF9F6;
+}
+
+.task-columns {
+    display: flex;
+  }
+  
+  .task-column {
+    flex: 1;
+    margin: 10px;
+  }
+  

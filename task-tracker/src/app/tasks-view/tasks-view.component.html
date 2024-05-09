@@ -1,0 +1,16 @@
+<div class="buttons">
+    <button mat-button (click)="switchToListView()" name="listButton">
+      <mat-icon>list</mat-icon>
+    </button>
+    <button mat-button (click)="switchToGridView()" name="gridButton">
+      <mat-icon>grid_on</mat-icon>
+    </button>
+</div>
+  
+<div *ngIf="isList; else gridBlock">
+  <app-task-list></app-task-list>
+</div>
+
+<ng-template #gridBlock>
+  <app-task-grid></app-task-grid>
+</ng-template>
