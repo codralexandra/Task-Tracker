@@ -1,4 +1,5 @@
 using System.Reflection;
+using TasksAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddSwaggerGen(c => {
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
-
+builder.Services.AddSingleton<ITaskCollectionService, TaskCollectionService>();
 
 var app = builder.Build();
 

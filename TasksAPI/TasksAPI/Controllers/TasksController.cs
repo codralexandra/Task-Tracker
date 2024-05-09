@@ -1,24 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TasksAPI.Models;
+using TasksAPI.Services;
 
 namespace TasksAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TaskController : ControllerBase
+    public class TasksController : ControllerBase
     {
-        static List<TaskModel> _tasks = new List<TaskModel> { new TaskModel { Id = Guid.NewGuid(), Title = "First Task", Description = "First Task Description" , AssignedTo = "Author_1", Status = "To do"},
-        new TaskModel { Id = Guid.NewGuid(), Title = "Second Task", Description = "Second Task Description", AssignedTo = "Author_1", Status = "To do" },
-        new TaskModel { Id = Guid.NewGuid(), Title = "Third Task", Description = "Third Task Description", AssignedTo = "Author_2", Status = "To do"  },
-        new TaskModel { Id = Guid.NewGuid(), Title = "Fourth Task", Description = "Fourth Task Description", AssignedTo = "Author_3", Status = "To do"  },
-        new TaskModel { Id = Guid.NewGuid(), Title = "Fifth Task", Description = "Fifth Task Description", AssignedTo = "Author_4", Status = "To do"  }
-        };
+        
+        ITaskCollectionService _taskCollectionService;
+
+        public TasksController(ITaskCollectionService taskCollectionService)
+        {
+            _taskCollectionService = taskCollectionService ?? throw new ArgumentNullException(nameof(TaskCollectionService));
+        }
 
         [HttpGet]
         public IActionResult GetTasks()
         {
-            return Ok(_tasks);
+            List<TaskModel> tasks = _taskCollectionService.GetAll();
+            return Ok(tasks);
         }
 
         [HttpPost]
@@ -27,7 +30,6 @@ namespace TasksAPI.Controllers
             if (task == null)
             {
                 return BadRequest("Task cannot be null");
-                //return StatusCode(StatusCodes.Status500InternalServerError, "Error in processing the Task");
             }
             else return Ok(task);
         }
@@ -42,7 +44,8 @@ namespace TasksAPI.Controllers
             }
             else
             {
-                TaskModel foundTask = _tasks.Find(t => t.Id == task.Id);
+                List<TaskModel> tasks = _taskCollectionService.GetAll();
+                TaskModel foundTask = tasks.Find(t => t.Id == task.Id);
                 if (foundTask == null)
                 {
                     return NotFound("Task wasn't found.");
@@ -67,13 +70,14 @@ namespace TasksAPI.Controllers
             }
             else
             {
-                TaskModel foundTask = _tasks.Find(t => t.Id == Id);
+                List<TaskModel> tasks = _taskCollectionService.GetAll();
+                TaskModel foundTask = tasks.Find(t => t.Id == Id);
                 if (foundTask == null)
                 {
                     return NotFound("Task wasn't found.");
                 }
 
-                _tasks.Remove(foundTask);
+                tasks.Remove(foundTask);
 
                 return Ok("Succesfully deleted the task.");
             }
