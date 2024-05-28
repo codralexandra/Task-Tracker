@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-add-task',
@@ -39,11 +40,11 @@ export class AddTaskComponent {
   description : String;
   assignedTo : String;
 
-
   constructor(
     private taskService: TaskService,
     private router: Router,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private notificationService : NotificationService
     ) {}
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -63,13 +64,15 @@ export class AddTaskComponent {
   
     this.taskService.addTask(newTask)
       .subscribe(task => {
-        console.log('Task added successfully:', task);
+        this.notificationService.sendMessage("BroadcastMessage",
+          [task])
+        //reset form fields after submission
+        //this.resetForm();
         this.router.navigate(['/']);
       });
   }
 
-  onClick()
-  {
+  onClick() {
     this.router.navigate(['/']);
   }
 }

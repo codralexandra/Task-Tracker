@@ -11,7 +11,7 @@ export class TaskService {
   taskDeleted: EventEmitter<Task> = new EventEmitter<Task>();
   taskAdded: EventEmitter<Task> = new EventEmitter<Task>();
 
-  baseURL="https://tasksapi20240226164535.azurewebsites.net/api/Tasks"
+  baseURL="http://localhost:5200/Tasks"
 
   headers: HttpHeaders | { [header: string]: string | string[]; };
 

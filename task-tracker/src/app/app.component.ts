@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { NotificationService } from './notification.service';
 
 @Component({
   selector: 'app-root',
@@ -28,4 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class AppComponent {
   title = 'task-tracker';
+
+  constructor(private notificationService : NotificationService) {
+    this.notificationService.initWebSocket();
+  }
 }

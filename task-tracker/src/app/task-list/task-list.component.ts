@@ -44,13 +44,13 @@ export class TaskListComponent implements OnChanges {
       this.tasks = tasks;
       this.filteredTasks = [...this.tasks];
     } );
-    this.taskService.taskDeleted.subscribe(deletedTask => {
-      this.tasks = this.tasks.filter(task => task.id !== deletedTask.id);
-      this.filteredTasks = [...this.tasks];
-    });
-    this.taskService.taskAdded.subscribe((newTask: Task) => {
-      this.tasks.push(newTask);
-    });
+    //this.taskService.taskDeleted.subscribe(deletedTask => {
+    //  this.tasks = this.tasks.filter(task => task.id !== deletedTask.id);
+    //  this.filteredTasks = [...this.tasks];
+    //});
+    //this.taskService.taskAdded.subscribe((newTask: Task) => {
+    //  this.tasks.push(newTask);
+    //});
   }
 
   handleStatusSelected(status)

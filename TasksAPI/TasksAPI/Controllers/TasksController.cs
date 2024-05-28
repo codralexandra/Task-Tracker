@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using TasksAPI.Models;
 using TasksAPI.Services;
 
@@ -9,78 +8,83 @@ namespace TasksAPI.Controllers
     [Route("[controller]")]
     public class TasksController : ControllerBase
     {
-        
-        ITaskCollectionService _taskCollectionService;
+        private ITaskCollectionService _tasksCollectionService;
 
         public TasksController(ITaskCollectionService taskCollectionService)
         {
-            _taskCollectionService = taskCollectionService ?? throw new ArgumentNullException(nameof(TaskCollectionService));
+            _tasksCollectionService = taskCollectionService ?? 
+                throw new ArgumentNullException(nameof(TaskCollectionService));
         }
 
         [HttpGet]
-        public IActionResult GetTasks()
+        public async Task<IActionResult> GetTasks()
         {
-            List<TaskModel> tasks = _taskCollectionService.GetAll();
+            List<TaskModel> tasks = await _tasksCollectionService.GetAll();
             return Ok(tasks);
         }
 
+
         [HttpPost]
-        public IActionResult CreateTask([FromBody] TaskModel task)
+        public async Task<IActionResult> CreateTask([FromBody] TaskModel task)
         {
             if (task == null)
             {
                 return BadRequest("Task cannot be null");
             }
-            else return Ok(task);
+            bool result = await _tasksCollectionService.Create(task);
+            if(result)
+            {
+                return Ok(task);
+            }
+            return BadRequest("There was a problem while handling your request.");
         }
 
-        [HttpPut]
-        public IActionResult UpdateTask([FromBody] TaskModel task)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTask(Guid id, [FromBody] TaskModel task)
         {
-            if (task == null)
+            if (task == null || id == Guid.Empty)
             {
                 return BadRequest("Task cannot be null");
                 //return StatusCode(StatusCodes.Status500InternalServerError, "Error in processing the Task");
             }
-            else
+            bool updateResult = await _tasksCollectionService.Update(id, task);
+            if (updateResult)
             {
-                List<TaskModel> tasks = _taskCollectionService.GetAll();
-                TaskModel foundTask = tasks.Find(t => t.Id == task.Id);
-                if (foundTask == null)
-                {
-                    return NotFound("Task wasn't found.");
-                }
-
-                foundTask.Title = task.Title ?? foundTask.Title;
-                foundTask.Description = task.Description ?? foundTask.Description;
-                foundTask.AssignedTo = task.AssignedTo ?? foundTask.AssignedTo;
-                foundTask.Status = task.Status ?? foundTask.Status;
-
-                return Ok(foundTask);
+                return Ok("Task updated succesfully!");
             }
+            return BadRequest("Task update failed.");
         }
 
-        [HttpDelete]
-        public IActionResult Delete(Guid Id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTask(Guid Id)
         {
             if (Id == Guid.Empty)
             {
                 return BadRequest("Task cannot be null");
                 //return StatusCode(StatusCodes.Status500InternalServerError, "Error in processing the Task");
             }
-            else
+            bool deleteResult = await _tasksCollectionService.Delete(Id);
+            if(deleteResult)
             {
-                List<TaskModel> tasks = _taskCollectionService.GetAll();
-                TaskModel foundTask = tasks.Find(t => t.Id == Id);
-                if (foundTask == null)
-                {
-                    return NotFound("Task wasn't found.");
-                }
-
-                tasks.Remove(foundTask);
-
-                return Ok("Succesfully deleted the task.");
+                return Ok("Task deleted succesfully!");
             }
+            return NotFound("Task delete failed.");
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTask(Guid id)
+        {
+            if(id== Guid.Empty)
+            {
+                return BadRequest("ID cannot be null.");
+            }
+            TaskModel task = await _tasksCollectionService.Get(id);
+            if (task != null)
+            {
+                return Ok(task);
+            }
+            return NotFound("Task not found.");
+        }
+
     }
 }
