@@ -36,22 +36,5 @@ export class TaskGridComponent {
   ngOnInit()
   {
     this.taskService.getTasks().subscribe(tasks => this.tasks = tasks);
-    this.taskService.taskDeleted.subscribe(deletedTask => {
-      this.tasks = this.tasks.filter(task => task.id !== deletedTask.id);
-    });
-    this.taskService.taskAdded.subscribe((newTask: Task) => {
-      this.tasks.push(newTask);
-    });
-  }
-
-  deleteTask(task: Task)
-  {
-    this.taskService.deleteTask(task);
-    this.taskService.getTasks(); //doesnt refresh the list to update visually
-  }
-
-  addTask(task: Task)
-  {
-    this.taskService.addTask(task);
   }
 }

@@ -8,6 +8,14 @@
         <mat-label>Description</mat-label>
         <input matInput [(ngModel)]="data.description">
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Status</mat-label>
+        <select matNativeControl [(ngModel)]="data.status">
+            <option *ngFor="let status of statuses" [value]="status">
+                {{status}}
+            </option>   
+        </select>
+    </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions id="editTaskActions">
     <button mat-button class="btn btn-primary" (click)="cancel()">Cancel</button>

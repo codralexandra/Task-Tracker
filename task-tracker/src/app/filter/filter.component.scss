@@ -1,0 +1,33 @@
+.filter-buttons{
+    margin: 0; 
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    }
+    .buttons {
+        margin: 5px;
+        display: flex;
+        align-items: center;
+      }
+      
+      button {
+        background-color: white;
+        border-color: #7cb686;
+        border-width: 2px;
+        color: black;
+        font-weight: bold;
+        border-radius: 10px;
+        width: 100px;
+        height: 30px;
+        margin-left: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        outline: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+      
+      button:hover {
+        background-color: lightgray;
+      }

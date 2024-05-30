@@ -9,6 +9,7 @@ import { ChildrenOutletContexts } from '@angular/router';
 import { TaskService } from '../services/task.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
+import { Status } from '../status';
 
 @Component({
   selector: 'app-task-list',
@@ -35,6 +36,19 @@ export class TaskListComponent implements OnChanges {
     private dialog : MatDialog,
     ) { this.filteredTasks=this.tasks; }
 
+    getStatusColor(status: Status) {
+      switch(status) {
+        case Status.Done:
+            return 'done-status';
+        case Status.ToDo:
+          return 'todo-status';
+        case Status.InProgress:
+          return 'inprogress-status';
+        default:
+          return '';
+      }
+    }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.filteredTasks = this.tasks;
   }
@@ -44,13 +58,13 @@ export class TaskListComponent implements OnChanges {
       this.tasks = tasks;
       this.filteredTasks = [...this.tasks];
     } );
-    //this.taskService.taskDeleted.subscribe(deletedTask => {
-    //  this.tasks = this.tasks.filter(task => task.id !== deletedTask.id);
-    //  this.filteredTasks = [...this.tasks];
-    //});
-    //this.taskService.taskAdded.subscribe((newTask: Task) => {
-    //  this.tasks.push(newTask);
-    //});
+    this.taskService.taskDeleted.subscribe(deletedTask => {
+     this.tasks = this.tasks.filter(task => task.id !== deletedTask.id);
+     this.filteredTasks = [...this.tasks];
+    });
+    this.taskService.taskAdded.subscribe((newTask: Task) => {
+     this.tasks.push(newTask);
+    });
   }
 
   handleStatusSelected(status)
@@ -65,17 +79,18 @@ export class TaskListComponent implements OnChanges {
  
      dialogRef.afterClosed().subscribe((result) => {
        console.log('The dialog was closed');
-       this.taskService.editTask(task);
+       this.taskService.editTask(task).subscribe((task)=> {
+        console.log('Task edited succesfully', task);
+       });
      });
    }
 
-  deleteTask(task)
-  {
-    this.taskService.deleteTask(task)
-      .subscribe(task => {
-        console.log('Task deleted successfully:', task);
-        this.taskService.getTasks();
-      });
-
+  deleteTask(taskToDelete: Task): void {
+    this.taskService.deleteTask(taskToDelete).subscribe((task) => {
+      console.log('Task deleted successfully', task);
+      this.taskService
+        .getTasks()
+        .subscribe((tasks) => (this.filteredTasks = tasks));
+    });
   }
 }

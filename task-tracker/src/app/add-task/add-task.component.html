@@ -1,5 +1,6 @@
 <div class="add-container">
   <mat-card class="card">
+    <img class="add-image" src="assets/fwog2.png"/>
     <mat-card-title class="title">Add a task!</mat-card-title>
     <mat-card-content class="contents">
       <div class="form-group">
@@ -19,8 +20,6 @@
           </textarea>
         </mat-form-field>
 
-        
-    
         <br>
     
         <br>
@@ -64,11 +63,11 @@
 
   <mat-card-actions class="buttonContainer">
     <form (ngSubmit)="onSubmit()">
-        <button mat-raised-button color='primary' type="submit" class="addButton">
-          <!-- <mat-icon>add</mat-icon> --> Add
+        <button mat-icon-button type="submit" class="addButton">
+          <mat-icon>add</mat-icon>
         </button>
-        <button mat-flat-button color='warn' type="cancel" class="cancelButton" (click)="onClick()">
-          <!-- <mat-icon>cancel</mat-icon> --> Cancel
+        <button mat-icon-button  type="cancel" class="cancelButton" (click)="onClick()">
+          <mat-icon>close</mat-icon>
         </button>
     </form>
   </mat-card-actions>

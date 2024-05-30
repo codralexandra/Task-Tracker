@@ -1,17 +1,14 @@
 <mat-card>
-    <mat-card-header>
-      <mat-card-title>Task-Card</mat-card-title>
-    </mat-card-header>
     <mat-card-content>
-      <p> {{task.name}} </p>
-      <p> {{task.description}} </p>
-      <p> {{task.status}} </p>
+      <p class="task-name"> {{task.name}} </p>
+      <p class="task-description"> {{task.description}} </p>
+      <p [ngClass]="getStatusColor(task.status)"> {{ task.status }} </p>
       <mat-divider></mat-divider>
-      <mat-card-actions>
-        <button mat-icon-button color="warn" (click)="deleteTask(task)">
+      <mat-card-actions class="buttons">
+        <button class="button-delete" mat-icon-button color="warn" (click)="deleteTask(task)">
           <mat-icon >delete</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="editTask(this.task)">
+        <button class="button-edit" mat-icon-button color="primary" (click)="editTask(task)">
           <mat-icon>edit</mat-icon>
         </button>
       </mat-card-actions>

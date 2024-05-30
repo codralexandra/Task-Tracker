@@ -1,3 +1,37 @@
-body{
-    background-color: #FAF9F6;
-}
+body {
+    background-color: #faf9f6;
+    margin: 0; 
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .buttons {
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  button {
+    background-color: #7cb686;
+    color: black;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  button:hover {
+    background-color: #5e8f58;
+  }
+  
+  p {
+    margin-top: 0;
+  }

@@ -7,6 +7,8 @@ import { Task } from '../task';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { TaskService } from '../services/task.service';
+import { Status } from '../status';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-task-card',
@@ -15,7 +17,8 @@ import { TaskService } from '../services/task.service';
     MatProgressBarModule,
     MatDividerModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    CommonModule
   ],
   providers: [TaskService],
   templateUrl: './task-card.component.html',
@@ -40,18 +43,30 @@ export class TaskCardComponent {
 
   }
 
-  editTask(task: Task): void {
+  getStatusColor(status: Status) {
+    switch(status) {
+      case Status.Done:
+          return 'done-status';
+      case Status.ToDo:
+        return 'todo-status';
+      case Status.InProgress:
+        return 'inprogress-status';
+      default:
+        return '';
+    }
+  }
+
+  editTask(task: Task) {
     const dialogRef = this.dialog.open(EditTaskComponent, {
-       data: task,
-     });
- 
-     dialogRef.afterClosed().subscribe((result) => {
-       console.log('The dialog was closed');
-       this.taskService.editTask(task)
-       .subscribe(task => {
-          console.log('Task edited succesfully:', task);
-       });
-     });
-   }
+      data: task,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.taskService.editTask(task).subscribe((task) => {
+        console.log('Task edited successfully', task);
+      });
+    });
+  }
   
 }

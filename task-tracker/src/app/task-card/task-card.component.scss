@@ -1,8 +1,52 @@
-.mat-card{
-    padding: 10px;
-    width: 500px;
-    background-color: #FAF9F6;
+mat-card{
+    background-color: #F6FFF8;
+    border: 1px solid #7cb686;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .title{
+    .task-name{
+        font-weight: bold;
+        font-size: large;
+    }
+    .done-status {
+        color: #7FB67C; 
         font-weight: bold;
     }
+    
+    .todo-status {
+        color: #B67C89;
+        font-weight: bold;
+    }
+    
+    .inprogress-status {
+        color: #C6AC53;
+        font-weight: bold;
+    }
+
+    .buttons{
+        margin: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    button {
+        color: black;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        }
+        .button-delete{
+        background-color: #E98884;
+        }
+        .button-edit{
+        background-color: #88ADE6;
+        }

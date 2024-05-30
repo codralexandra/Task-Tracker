@@ -3,7 +3,7 @@
 <div *ngFor="let task of filteredTasks" class="task-item">
     <div class="task-name">{{ task.name }}</div>
     <div class="task-description">{{ task.description }}</div>
-    <div class="task-status">{{ task.status }}</div>
+    <p class="task-status" [ngClass]="getStatusColor(task.status)"> {{ task.status }} </p>
     <div class="task-actions">
     <button mat-icon-button color="primary" (click)="editTask(task)">
         <mat-icon>edit</mat-icon>

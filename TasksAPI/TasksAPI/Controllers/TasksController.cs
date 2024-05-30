@@ -42,7 +42,7 @@ namespace TasksAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTask(Guid id, [FromBody] TaskModel task)
         {
-            if (task == null || id == Guid.Empty)
+            if (task == null)
             {
                 return BadRequest("Task cannot be null");
                 //return StatusCode(StatusCodes.Status500InternalServerError, "Error in processing the Task");

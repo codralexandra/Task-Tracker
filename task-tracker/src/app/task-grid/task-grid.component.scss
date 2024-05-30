@@ -6,8 +6,31 @@
 
   .task-column
    {
-     min-height: 80;
+     min-height: 100;
      margin: 10px;
      display: flex;
      flex-direction: column;
    }
+
+   .column-title {
+    text-align: center;
+    color: #333; 
+    font-weight: bold;
+  }
+  
+  .column-title-toDo h2 {
+    color: red;
+  }
+  
+  .column-title-inProgress h2 {
+    color: orange;
+  }
+  
+  .column-title-done h2 {
+    color: green;
+  }
+
+  .task-element{
+    margin: 10px;
+    }
+  
